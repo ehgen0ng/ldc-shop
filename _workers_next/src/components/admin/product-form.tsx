@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useI18n } from "@/lib/i18n/context"
@@ -18,7 +18,12 @@ export default function ProductForm({ product, categories = [] }: { product?: an
     const submitLock = useRef(false)
     // Only show warning section if purchaseWarning has actual content
     const [showWarning, setShowWarning] = useState(Boolean(product?.purchaseWarning && String(product.purchaseWarning).trim()))
+    const [visibilityLevel, setVisibilityLevel] = useState(String(product?.visibilityLevel ?? -1))
     const { t } = useI18n()
+
+    useEffect(() => {
+        setVisibilityLevel(String(product?.visibilityLevel ?? -1))
+    }, [product?.visibilityLevel])
 
     async function handleSubmit(formData: FormData) {
         if (submitLock.current) return
@@ -107,7 +112,8 @@ export default function ProductForm({ product, categories = [] }: { product?: an
                         <select
                             id="visibilityLevel"
                             name="visibilityLevel"
-                            defaultValue={String(product?.visibilityLevel ?? -1)}
+                            value={visibilityLevel}
+                            onChange={(e) => setVisibilityLevel(e.target.value)}
                             className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2"
                         >
                             <option value="-1">{t('admin.productForm.visibilityAll')}</option>
