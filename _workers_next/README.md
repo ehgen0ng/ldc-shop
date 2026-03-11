@@ -1,6 +1,5 @@
 # LDC Shop (Cloudflare Workers Edition)
 
-
 基于 **Next.js 16**、**Cloudflare Workers** (OpenNext)、**D1 Database** 和 **Shadcn UI** 构建的无服务器虚拟商品商店。
 
 ## 🛠 技术架构 (Technical Architecture)
